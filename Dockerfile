@@ -685,7 +685,16 @@ RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CAS && c
   ninja -C build && ninja -C build install 
 
 # imwri
-RUN apt-get update && apt-get install -y --no-install-recommends curl alien
+RUN apt-get update && apt-get install -y --no-install-recommends alien autoconf autoconf-archive binutils bison build-essential \
+        cmake curl dbus-x11 flex fontforge git gperf imagemagick intltool \
+        jq libc6 libcamd2 libcpu-features-dev libdmalloc-dev libdmalloc5 \
+        libfont-ttf-perl libfontconfig-dev libgc-dev libgc1 libgegl-0.4-0 \
+        libgegl-common libgimp2.0-dev libgl2ps-dev libglib2.0-dev libgs-dev \
+        libheif-dev libhwy-dev libjemalloc-dev libjxl-dev libnotify-bin \
+        libpstoedit-dev librust-jpeg-decoder-dev librust-malloc-buf-dev \
+        libsharp-dev libticonv-dev libtool libtool-bin libyuv-dev libyuv-utils \
+        libyuv0 lsb-release lzip m4 meson nasm ninja-build php-dev pkg-config \
+        python3-dev yasm zlib1g-dev
 #RUN curl -LSso build-magick.sh https://imagick.optimizethis.net && bash build-magick.sh
 
 RUN git clone https://github.com/rawhide-kobayashi/imagemagick-build-script.git && cd imagemagick-build-script && bash build-magick.sh
