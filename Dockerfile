@@ -229,6 +229,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -y update && apt-get install -y \
   curl \
+  gnutls-bin \
   make \
   gcc \
   wget \
