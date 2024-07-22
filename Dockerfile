@@ -284,6 +284,7 @@ RUN apt-get -y update && apt-get install -y \
   python3.11-dev \
   python3.11-venv \
   python3-pip \
+  gnutls-bin \
   git && \
   apt-get autoclean -y && \
   apt-get autoremove -y && \
@@ -513,7 +514,7 @@ ARG ONNXRUNTIME_BRANCH=rel-1.18.1
 ARG CMAKE_CUDA_ARCHITECTURES=37;50;52;53;60;61;62;70;72;75;80;89
 
 RUN apt-get update &&\
-    apt-get install -y sudo git bash unattended-upgrades
+    apt-get install -y sudo git gnutls-bin bash unattended-upgrades
 RUN unattended-upgrade
 
 WORKDIR /code
