@@ -26,10 +26,6 @@ tmp_dir = "tmp/"
 import sys
 
 
-def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
-
-
 def metrics_func(clip):
     offs1 = core.std.BlankClip(clip, length=1) + clip[:-1]
     offs1 = core.std.CopyFrameProps(offs1, clip)
@@ -113,7 +109,7 @@ clip = CsvToProp(clip, "tmp/infos_running.txt")
 
 clip = core.std.DeleteFrames(clip, dels)
 
-clip = vs.core.resize.Bicubic(clip, format=vs.RGBS)
+clip = vs.core.resize.Bicubic(clip, format=vs.RGBH, matrix_in_s="709")
 clip_orig = vs.core.std.Interleave([clip] * 8)
 
 clip = rife_trt(
@@ -122,7 +118,7 @@ clip = rife_trt(
     scale=1.0,
     device_id=0,
     num_streams=2,
-    engine_path="/workspace/tensorrt/rife418_v2_ensembleFalse_op20_clamp_onnxslim.engine",
+    engine_path="/workspace/tensorrt/rife418_v2_ensembleFalse_op20_fp16_clamp_onnxslim.engine",
 )
 clip = core.akarin.Select([clip, clip_orig], clip, "x._SceneChangeNext 1 0 ?")
 clip = core.akarin.Select([clip, clip_orig], clip, "x.float_ssim 0.999 >")
@@ -146,7 +142,7 @@ def frame_adjuster(n, clip, target_fps_num, target_fps_den):
     return one_frame_clip
 
 
-clip = core.std.BlankClip(
+attribute_clip = core.std.BlankClip(
     clip,
     length=math.floor(
         len(clip) * target_fps_num / target_fps_den * clip.fps_den / clip.fps_num
@@ -154,8 +150,8 @@ clip = core.std.BlankClip(
     fpsnum=target_fps_num,
     fpsden=target_fps_den,
 )
-clip = core.std.FrameEval(
-    clip,
+adjusted_clip = core.std.FrameEval(
+    attribute_clip,
     functools.partial(
         frame_adjuster,
         clip=clip,
@@ -164,13 +160,13 @@ clip = core.std.FrameEval(
     ),
 )
 
-clip = vs.core.resize.Bicubic(clip, format=vs.RGBH)
-
-clip = core.trt.Model(
-    clip,
+adjusted_clip = core.trt.Model(
+    adjusted_clip,
     engine_path="/workspace/tensorrt/2x_AnimeJaNai_V2.1_SmoothRC12_Compact_34k_clamp_fp16_op20.engine",
     num_streams=2,
 )
-clip = vs.core.resize.Bicubic(clip, format=vs.YUV420P8, matrix_s="709")
+adjusted_clip = vs.core.resize.Bicubic(
+    adjusted_clip, format=vs.YUV420P8, matrix_s="709"
+)
 
-clip.set_output()
+adjusted_clip.set_output()
