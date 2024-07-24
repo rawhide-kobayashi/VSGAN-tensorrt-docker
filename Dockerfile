@@ -1,11 +1,11 @@
 ############################
 # FFMPEG
 ############################
-FROM archlinux as ffmpeg-arch
+FROM archlinux AS ffmpeg-arch
 RUN --mount=type=cache,sharing=locked,target=/var/cache/pacman \
   pacman -Syu --noconfirm --needed base base-devel cuda git
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 ARG user=makepkg
 RUN useradd --system --create-home $user && \
   echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" >/etc/sudoers.d/$user
@@ -27,14 +27,14 @@ RUN wget https://github.com/python/cpython/archive/refs/tags/v3.11.9.tar.gz && t
   mkdir debug && cd debug && ../configure --enable-optimizations --disable-shared --prefix="/home/makepkg/python311" && make -j$(nproc) && make install && \
   /home/makepkg/python311/bin/python3.11 -m ensurepip --upgrade
 RUN cp /home/makepkg/python311/bin/python3.11 /usr/bin/python
-ENV PYTHONPATH /home/makepkg/python311/bin/
-ENV PATH "/home/makepkg/python311/bin/:$PATH"
+ENV PYTHONPATH=/home/makepkg/python311/bin/
+ENV PATH="/home/makepkg/python311/bin/:$PATH"
 
 RUN pip3 install "cython<3" meson
 
-ENV PATH "$PATH:/opt/cuda/bin/nvcc"
-ENV PATH "$PATH:/opt/cuda/bin"
-ENV LD_LIBRARY_PATH "/opt/cuda/lib64"
+ENV PATH="$PATH:/opt/cuda/bin/nvcc"
+ENV PATH="$PATH:/opt/cuda/bin"
+ENV LD_LIBRARY_PATH="/opt/cuda/lib64"
 
 # -O3 makes sure we compile with optimization. setting CFLAGS/CXXFLAGS seems to override
 # default automake cflags.
@@ -50,7 +50,7 @@ ARG LDFLAGS="-Wl,-z,relro,-z,now"
 RUN wget https://github.com/sekrit-twc/zimg/archive/refs/tags/release-3.0.5.tar.gz && tar -zxvf release-3.0.5.tar.gz && cd zimg-release-3.0.5 && \
   ./autogen.sh && ./configure --enable-static --disable-shared && make -j$(nproc) install
 
-ENV PATH /usr/local/bin:$PATH
+ENV PATH=/usr/local/bin:$PATH
 RUN wget https://github.com/vapoursynth/vapoursynth/archive/refs/tags/R69.tar.gz && \
   tar -zxvf R69.tar.gz && cd vapoursynth-R69 && ./autogen.sh && \
   PKG_CONFIG_PATH="/usr/lib/pkgconfig:/usr/local/lib/pkgconfig" ./configure --enable-static --disable-shared && \
@@ -223,7 +223,7 @@ RUN cd FFmpeg && \
 # compiling own torch since the official whl is bloated
 # could be smaller in terms of dependencies and whl size, but for now, -500mb smaller docker size
 ############################
-FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 as torch-ubuntu
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 AS torch-ubuntu
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -268,7 +268,7 @@ RUN cd pytorch && pip3 install -r requirements.txt \
 ############################
 # cupy
 ############################
-FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 as cupy-ubuntu
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 AS cupy-ubuntu
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -299,7 +299,7 @@ RUN git clone https://github.com/cupy/cupy --recursive && cd cupy && git submodu
 # bestsource / lsmash / ffms2
 # todo: check if CFLAGS=-fPIC CXXFLAGS=-fPIC LDFLAGS="-Wl,-Bsymbolic" --extra-ldflags="-static" is required
 ############################
-FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 as bestsource-lsmash-ffms2-vs
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 AS bestsource-lsmash-ffms2-vs
 
 ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR workspace
@@ -381,10 +381,10 @@ RUN git clone https://github.com/FFMS/ffms2 && cd ffms2 && ./autogen.sh && CFLAG
 ############################
 # OpenCV
 ############################
-FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04 as opencv-ubuntu
+FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04 AS opencv-ubuntu
 ARG DEBIAN_FRONTEND=noninteractive
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES all
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=all
 
 RUN apt-get update && apt-get upgrade -y &&\
     apt-get install -y \
@@ -458,7 +458,7 @@ RUN python3.11 -m pip install --upgrade pip setuptools wheel && python3.11 -m pi
 ############################
 # TensorRT + ORT
 ############################
-FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 as TensorRT-ubuntu
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 AS TensorRT-ubuntu
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -518,7 +518,7 @@ RUN apt-get update &&\
 RUN unattended-upgrade
 
 WORKDIR /code
-ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
+ENV PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
 
 RUN apt install git -y
 
@@ -542,10 +542,10 @@ RUN cd onnxruntime && PYTHONPATH=/usr/bin/python3 /bin/sh build.sh --nvcc_thread
 ############################
 
 # https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/11.4.2/ubuntu2204/base/Dockerfile
-FROM ubuntu:22.04 as base
+FROM ubuntu:22.04 AS base
 ARG DEBIAN_FRONTEND=noninteractive
-ENV NVARCH x86_64
-ENV NVIDIA_REQUIRE_CUDA "cuda>=11.4"
+ENV NVARCH=x86_64
+ENV NVIDIA_REQUIRE_CUDA="cuda>=11.4"
 COPY nvidia_icd.json /etc/vulkan/icd.d/nvidia_icd.json
 
 LABEL maintainer "NVIDIA CORPORATION <cudatools@nvidia.com>"
@@ -562,8 +562,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   rm -rf /var/lib/apt/lists/*
 RUN echo "/usr/local/nvidia/lib" >>/etc/ld.so.conf.d/nvidia.conf && \
   echo "/usr/local/nvidia/lib64" >>/etc/ld.so.conf.d/nvidia.conf
-ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
+ENV PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
+ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 ENV NVIDIA_DRIVER_CAPABILITIES all
@@ -576,8 +576,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
   rm -rf /var/lib/apt/lists/*
 # may not be required
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-12.4/lib64:/usr/local/cuda-12.4/lib
-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
-ENV NVIDIA_DRIVER_CAPABILITIES all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
+ENV NVIDIA_DRIVER_CAPABILITIES=all
 
 WORKDIR workspace
 
@@ -790,12 +790,12 @@ RUN wget http://mirrors.kernel.org/ubuntu/pool/main/libt/libtirpc/libtirpc-dev_1
 ############################
 # final
 ############################
-FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04 as final
+FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04 AS final
 # maybe official tensorrt image is better, but it uses 20.04
-#FROM nvcr.io/nvidia/tensorrt:23.04-py3 as final
+#FROM nvcr.io/nvidia/tensorrt:23.04-py3 AS final
 ARG DEBIAN_FRONTEND=noninteractive
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES all
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=all
 
 WORKDIR workspace
 
