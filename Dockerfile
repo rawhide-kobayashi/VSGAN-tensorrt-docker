@@ -694,7 +694,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends alien autoconf 
         libpstoedit-dev librust-jpeg-decoder-dev librust-malloc-buf-dev \
         libsharp-dev libticonv-dev libtool libtool-bin libyuv-dev libyuv-utils \
         libyuv0 lsb-release lzip m4 meson nasm ninja-build php-dev pkg-config \
-        python3-dev yasm zlib1g-dev
+        python3-dev yasm zlib1g-dev libxml2-dev
 #RUN curl -LSso build-magick.sh https://imagick.optimizethis.net && bash build-magick.sh
 
 RUN git clone https://github.com/rawhide-kobayashi/imagemagick-build-script.git && cd imagemagick-build-script && bash build-magick.sh
