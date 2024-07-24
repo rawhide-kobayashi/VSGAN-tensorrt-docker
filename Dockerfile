@@ -333,7 +333,7 @@ RUN git clone https://code.videolan.org/videolan/dav1d/ && \
   cd dav1d && meson build --buildtype release -Ddefault_library=static && ninja -C build install
 
 # Vulkan-Headers
-Run apt install cmake -y
+RUN apt install cmake -y
 RUN git clone https://github.com/KhronosGroup/Vulkan-Headers.git && cd Vulkan-Headers/ && cmake -S . -DBUILD_SHARED_LIBS=OFF -B build/ && cmake --install build
 
 # nv-codec-headers
@@ -548,7 +548,7 @@ ENV NVARCH=x86_64
 ENV NVIDIA_REQUIRE_CUDA="cuda>=11.4"
 COPY nvidia_icd.json /etc/vulkan/icd.d/nvidia_icd.json
 
-LABEL maintainer "NVIDIA CORPORATION <cudatools@nvidia.com>"
+LABEL maintainer="NVIDIA CORPORATION <cudatools@nvidia.com>"
 RUN apt-get update && apt-get install -y --no-install-recommends \
   gnupg2 curl ca-certificates && \
   curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/${NVARCH}/3bf863cc.pub | apt-key add - && \
@@ -564,9 +564,9 @@ RUN echo "/usr/local/nvidia/lib" >>/etc/ld.so.conf.d/nvidia.conf && \
   echo "/usr/local/nvidia/lib64" >>/etc/ld.so.conf.d/nvidia.conf
 ENV PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
-ENV NVIDIA_DRIVER_CAPABILITIES all
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
+ENV NVIDIA_DRIVER_CAPABILITIES=all
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   libx11-xcb-dev \
   libxkbcommon-dev \
