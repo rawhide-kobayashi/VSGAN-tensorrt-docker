@@ -770,6 +770,9 @@ RUN pip install pandas
 RUN pip install vsdenoise havsfunc lvsfunc vsdeband
 RUN pip install git+https://github.com/HomeOfVapourSynthEvolution/mvsfunc
 
+RUN git clone https://github.com/WolframRhodium/muvsfunc.git
+RUN mv muvsfunc /usr/local/lib/python3.11/site-packages/
+
 # workaround for arch updates
 # ffmpeg: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.32' not found (required by ffmpeg)
 # ffmpeg: /usr/lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.38' not found (required by ffmpeg)
