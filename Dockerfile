@@ -51,8 +51,8 @@ RUN wget https://github.com/sekrit-twc/zimg/archive/refs/tags/release-3.0.5.tar.
   ./autogen.sh && ./configure --enable-static --disable-shared && make -j$(nproc) install
 
 ENV PATH=/usr/local/bin:$PATH
-RUN wget https://github.com/vapoursynth/vapoursynth/archive/refs/tags/R69.tar.gz && \
-  tar -zxvf R69.tar.gz && cd vapoursynth-R69 && ./autogen.sh && \
+RUN wget https://github.com/vapoursynth/vapoursynth/archive/refs/tags/r66.tar.gz && \
+  tar -zxvf r66.tar.gz && cd vapoursynth-r66 && ./autogen.sh && \
   PKG_CONFIG_PATH="/usr/lib/pkgconfig:/usr/local/lib/pkgconfig" ./configure --enable-static --disable-shared && \
   make && make install && cd .. && ldconfig
 
@@ -324,8 +324,8 @@ RUN git clone https://github.com/sekrit-twc/zimg --recursive && cd zimg && \
   apt install /workspace/zimg/zimg_0.0-1_amd64.deb -y
 
 # vapoursynth
-RUN wget https://github.com/vapoursynth/vapoursynth/archive/refs/tags/R69.tar.gz && \
-  tar -zxvf R69.tar.gz && mv vapoursynth-R69 vapoursynth && cd vapoursynth && \
+RUN wget https://github.com/vapoursynth/vapoursynth/archive/refs/tags/r66.tar.gz && \
+  tar -zxvf r66.tar.gz && mv vapoursynth-r66 vapoursynth && cd vapoursynth && \
   ./autogen.sh && CFLAGS=-fPIC CXXFLAGS=-fPIC ./configure --enable-static --disable-shared && make -j$(nproc) && make install && ldconfig
 
 # dav1d
