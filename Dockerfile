@@ -844,7 +844,7 @@ COPY --from=bestsource-lsmash-ffms2-vs /usr/local/lib/libffms2.so* /usr/local/li
 COPY --from=base /usr/local/lib/vapoursynth/libvmaf.so /usr/local/lib/vapoursynth/libdescale.so /usr/local/lib/vapoursynth/libakarin.so \
   /usr/local/lib/vapoursynth/libmiscfilters.so /usr/local/lib/vapoursynth/libcas.so /usr/local/lib/vapoursynth/
 
-COPY --from=base /usr/local/lib/vapoursynth/libimwri.so /usr/local/lib/x86_64-linux-gnu/vapoursynth/
+#COPY --from=base /usr/local/lib/vapoursynth/libimwri.so /usr/local/lib/x86_64-linux-gnu/vapoursynth/
 COPY --from=base /usr/lib/x86_64-linux-gnu/libffms2.so /usr/lib/x86_64-linux-gnu/
 #COPY --from=base /usr/local/lib/libMagick++-7.Q16HDRI.so.* /usr/local/lib/libMagickCore-7.Q16HDRI.so.* /usr/local/lib/libMagickWand-7.Q16HDRI.so.* \
 #  /usr/local/lib/
