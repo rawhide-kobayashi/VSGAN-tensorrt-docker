@@ -805,13 +805,11 @@ COPY --from=base /usr/local/bin/python /usr/local/bin/
 COPY --from=base /usr/local/lib/python3.11 /usr/local/lib/python3.11
 COPY --from=base /workspace/Python-3.11.9/libpython3.11.so* /workspace/Python-3.11.9/libpython3.so \
   /workspace/Python-3.11.9/libpython3.so /usr/lib
-
-RUN mkdir /usr/local/lib/python3.11/site-packages/fvsfunc/; curl https://raw.githubusercontent.com/Irrational-Encoding-Wizardry/fvsfunc/master/fvsfunc.py -o /usr/local/lib/python3.11/site-packages/fvsfunc/fvsfunc.py
-
+  
 # vapoursynth
 COPY --from=base /workspace/zimg/zimg_0.0-1_amd64.deb zimg_0.0-1_amd64.deb
 RUN apt install ./zimg_0.0-1_amd64.deb -y && rm -rf zimg_0.0-1_amd64.deb
-RUN apt update && apt install libjemalloc2 liblcms2-2 liblqr-1-0 libltdl7 -y
+RUN apt update && apt install  curl libjemalloc2 liblcms2-2 liblqr-1-0 libltdl7 -y
 #RUN apt update && apt install git curl wget build-essential gcc -y --no-install-recommends
 #RUN apt update -y && apt install liblzma-dev libbz2-dev ca-certificates openssl libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev libtk8.6 libgdm-dev \
 #  libdb4o-cil-dev libpcap-dev software-properties-common wget zlib1g-dev -y && \
@@ -830,6 +828,8 @@ RUN apt update && apt install libjemalloc2 liblcms2-2 liblqr-1-0 libltdl7 -y
 COPY --from=base /usr/local/lib/vapoursynth /usr/local/lib/vapoursynth
 COPY --from=base /usr/local/lib/x86_64-linux-gnu/vapoursynth /usr/local/lib/x86_64-linux-gnu/vapoursynth
 COPY --from=base /usr/local/lib/libvapoursynth-script.so* /usr/local/lib/libvapoursynth.so /usr/local/lib/
+
+RUN mkdir /usr/local/lib/python3.11/site-packages/fvsfunc/; curl https://raw.githubusercontent.com/Irrational-Encoding-Wizardry/fvsfunc/master/fvsfunc.py -o /usr/local/lib/python3.11/site-packages/fvsfunc/fvsfunc.py
 
 # vapoursynth
 COPY --from=base /usr/local/bin/vspipe  /usr/local/bin/vspipe
