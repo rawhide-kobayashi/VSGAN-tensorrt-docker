@@ -767,7 +767,7 @@ RUN pip uninstall -y cupy* $(pip freeze | grep '^opencv' | cut -d = -f 1) && \
 RUN pip install pandas
 
 #additional vapoursynth plugins
-RUN pip install vsdenoise havsfunc lvsfunc vsdeband mvsfunc
+RUN pip install vsdenoise havsfunc lvsfunc vsdeband; $ pip install git+https://github.com/HomeOfVapourSynthEvolution/mvsfunc
 
 # workaround for arch updates
 # ffmpeg: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.32' not found (required by ffmpeg)
