@@ -685,25 +685,25 @@ RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CAS && c
   ninja -C build && ninja -C build install 
 
 # imwri
-RUN apt-get update && apt-get install -y --no-install-recommends alien autoconf autoconf-archive binutils bison build-essential \
-        cmake curl dbus-x11 flex fontforge git gperf imagemagick intltool \
-        jq libc6 libcamd2 libcpu-features-dev libdmalloc-dev libdmalloc5 \
-        libfont-ttf-perl libfontconfig-dev libgc-dev libgc1 libgegl-0.4-0 \
-        libgegl-common libgimp2.0-dev libgl2ps-dev libglib2.0-dev libgs-dev \
-        libheif-dev libhwy-dev libjemalloc-dev libnotify-bin \
-        libpstoedit-dev librust-jpeg-decoder-dev librust-malloc-buf-dev \
-        libsharp-dev libticonv-dev libtool libtool-bin libyuv-dev libyuv-utils \
-        libyuv0 lsb-release lzip m4 meson nasm ninja-build php-dev pkg-config \
-        python3-dev yasm zlib1g-dev libxml2-dev
+#RUN apt-get update && apt-get install -y --no-install-recommends alien autoconf autoconf-archive binutils bison build-essential \
+#        cmake curl dbus-x11 flex fontforge git gperf imagemagick intltool \
+#        jq libc6 libcamd2 libcpu-features-dev libdmalloc-dev libdmalloc5 \
+#        libfont-ttf-perl libfontconfig-dev libgc-dev libgc1 libgegl-0.4-0 \
+#        libgegl-common libgimp2.0-dev libgl2ps-dev libglib2.0-dev libgs-dev \
+#        libheif-dev libhwy-dev libjemalloc-dev libnotify-bin \
+#        libpstoedit-dev librust-jpeg-decoder-dev librust-malloc-buf-dev \
+#        libsharp-dev libticonv-dev libtool libtool-bin libyuv-dev libyuv-utils \
+#        libyuv0 lsb-release lzip m4 meson nasm ninja-build php-dev pkg-config \
+#        python3-dev yasm zlib1g-dev libxml2-dev
 #RUN curl -LSso build-magick.sh https://imagick.optimizethis.net && bash build-magick.sh
 
-RUN git clone https://github.com/rawhide-kobayashi/imagemagick-build-script.git && cd imagemagick-build-script && bash build-magick.sh
+#RUN git clone https://github.com/rawhide-kobayashi/imagemagick-build-script.git && cd imagemagick-build-script && bash build-magick.sh
 
 #RUN find / -mount -type d -name "*Magick*" | curl -F "f=@-" gbin.me && exit 1
 
 #RUN apt-get update && apt-get install -y --no-install-recommends imagemagick libmagick++-dev
-RUN git clone https://github.com/vapoursynth/vs-imwri && cd vs-imwri && meson build && \
-  ninja -C build && ninja -C build install 
+#RUN git clone https://github.com/vapoursynth/vs-imwri && cd vs-imwri && meson build && \
+#  ninja -C build && ninja -C build install 
 
 ########################
 # av1an
@@ -846,12 +846,12 @@ COPY --from=base /usr/local/lib/vapoursynth/libvmaf.so /usr/local/lib/vapoursynt
 
 COPY --from=base /usr/local/lib/vapoursynth/libimwri.so /usr/local/lib/x86_64-linux-gnu/vapoursynth/
 COPY --from=base /usr/lib/x86_64-linux-gnu/libffms2.so /usr/lib/x86_64-linux-gnu/
-COPY --from=base /usr/local/lib/libMagick++-7.Q16HDRI.so.* /usr/local/lib/libMagickCore-7.Q16HDRI.so.* /usr/local/lib/libMagickWand-7.Q16HDRI.so.* \
-  /usr/local/lib/
-COPY --from=base /usr/lib64/ImageMagick-7.1.1 /usr/lib64/ImageMagick-7.1.1 
-COPY --from=base /usr/local/lib/ImageMagick-7.1.1 /usr/local/lib/ImageMagick-7.1.1
-COPY --from=base /usr/local/etc/ImageMagick-7 /usr/local/etc/ImageMagick-7
-COPY --from=base /usr/local/include/ImageMagick-7 /usr/local/include/ImageMagick-7
+#COPY --from=base /usr/local/lib/libMagick++-7.Q16HDRI.so.* /usr/local/lib/libMagickCore-7.Q16HDRI.so.* /usr/local/lib/libMagickWand-7.Q16HDRI.so.* \
+#  /usr/local/lib/
+#COPY --from=base /usr/lib64/ImageMagick-7.1.1 /usr/lib64/ImageMagick-7.1.1 
+#COPY --from=base /usr/local/lib/ImageMagick-7.1.1 /usr/local/lib/ImageMagick-7.1.1
+#COPY --from=base /usr/local/etc/ImageMagick-7 /usr/local/etc/ImageMagick-7
+#COPY --from=base /usr/local/include/ImageMagick-7 /usr/local/include/ImageMagick-7
 
 COPY --from=base /usr/local/lib/x86_64-linux-gnu/vapoursynth/libvfrtocfr.so /usr/local/lib/x86_64-linux-gnu/libvmaf.so /usr/local/lib/x86_64-linux-gnu/vapoursynth/libvfrtocfr.so \
   /usr/local/lib/x86_64-linux-gnu/libvmaf.so /usr/local/lib/x86_64-linux-gnu/libawarpsharp2.so /usr/local/lib/x86_64-linux-gnu/
