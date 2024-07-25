@@ -621,7 +621,7 @@ RUN apt install fftw3-dev python-is-python3 pkg-config python3-pip git p7zip-ful
   apt install /workspace/zimg/zimg_0.0-1_amd64.deb -y
 
 # vapoursynth
-RUN pip install --upgrade pip && pip install cython && git clone https://github.com/vapoursynth/vapoursynth && \
+RUN pip install --upgrade pip && pip install cython && git clone -b R66 https://github.com/vapoursynth/vapoursynth && \
   cd vapoursynth && ./autogen.sh && \
   ./configure && make -j$(nproc) && make install && cd .. && ldconfig && \
   cd vapoursynth && python setup.py bdist_wheel
