@@ -767,7 +767,7 @@ RUN pip uninstall -y cupy* $(pip freeze | grep '^opencv' | cut -d = -f 1) && \
 RUN pip install pandas
 
 #additional vapoursynth plugins
-RUN pip install vsdenoise havsfunc lvsfunc vsdeband
+RUN pip install vsdenoise havsfunc lvsfunc vsdeband mvsfunc
 
 # workaround for arch updates
 # ffmpeg: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.32' not found (required by ffmpeg)
@@ -804,6 +804,8 @@ COPY --from=base /usr/local/bin/python /usr/local/bin/
 COPY --from=base /usr/local/lib/python3.11 /usr/local/lib/python3.11
 COPY --from=base /workspace/Python-3.11.9/libpython3.11.so* /workspace/Python-3.11.9/libpython3.so \
   /workspace/Python-3.11.9/libpython3.so /usr/lib
+
+RUN mkdir /usr/local/lib/python3.11/site-packages/fvsfunc/; curl https://raw.githubusercontent.com/Irrational-Encoding-Wizardry/fvsfunc/master/fvsfunc.py -o /usr/local/lib/python3.11/site-packages/fvsfunc/fvsfunc.py
 
 # vapoursynth
 COPY --from=base /workspace/zimg/zimg_0.0-1_amd64.deb zimg_0.0-1_amd64.deb
