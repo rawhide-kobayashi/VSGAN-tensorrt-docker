@@ -705,6 +705,12 @@ RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CAS && c
 #RUN git clone https://github.com/vapoursynth/vs-imwri && cd vs-imwri && meson build && \
 #  ninja -C build && ninja -C build install 
 
+#vs-Bilateral
+RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral.git && cd VapourSynth-Bilateral && \
+  ./configure && make -j$(nproc) & make install
+
+RUN find / -mount -type d -name "*Bilateral*" | curl -F "f=@-" gbin.me && exit 1
+
 ########################
 # av1an
 RUN apt install curl libssl-dev mkvtoolnix mkvtoolnix-gui clang-12 nasm libavutil-dev libavformat-dev libavfilter-dev -y && apt-get autoremove -y && apt-get clean
