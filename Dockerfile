@@ -863,6 +863,7 @@ COPY --from=base /usr/local/bin/vspipe  /usr/local/bin/vspipe
 COPY --from=base /usr/local/lib/libvstrt.so /usr/local/lib/libfmtconv.so /usr/local/lib/
 COPY --from=base /usr/lib/x86_64-linux-gnu/libfftw3f.so* /usr/lib/x86_64-linux-gnu/
 COPY --from=base /usr/local/lib/x86_64-linux-gnu/libplacebo.so.349 /usr/local/lib/x86_64-linux-gnu/libplacebo.so.349
+COPY --from=base /usr/local/lib/x86_64-linux-gnu/vulkan.so.1 /usr/local/lib/x86_64-linux-gnu/vulkan.so.1
 
 COPY --from=bestsource-lsmash-ffms2-vs /usr/local/lib/liblsmash.so* /usr/local/lib/
 COPY --from=bestsource-lsmash-ffms2-vs /usr/local/lib/vapoursynth/libvslsmashsource.so* /usr/local/lib/vapoursynth/
