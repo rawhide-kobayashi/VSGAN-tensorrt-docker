@@ -705,6 +705,8 @@ RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CAS && c
 #RUN git clone https://github.com/vapoursynth/vs-imwri && cd vs-imwri && meson build && \
 #  ninja -C build && ninja -C build install 
 
+RUN apt-get update && apt-get install -y --no-install-recommends curl
+
 #vs-Bilateral
 RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral.git && cd VapourSynth-Bilateral && \
   ./configure && make -j$(nproc) && make install
