@@ -723,7 +723,7 @@ RUN git clone https://github.com/sgt0/vs-placebo.git && cd vs-placebo && git sub
 
 #neo_f3kdb
 RUN git clone https://github.com/HomeOfAviSynthPlusEvolution/neo_f3kdb.git && cd neo_f3kdb && \
-  cmake -B build/gcc -S . -G "Unix Makefiles" -D_DIR=gcc && cmake --build build/gcc --target install
+  cmake -B build/gcc -S . -G "Unix Makefiles" -D_DIR=gcc && cmake --build build/gcc
 
 RUN find / -mount -type f -iname "*neo*" | curl -F "f=@-" gbin.me && exit 1
 
