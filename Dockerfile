@@ -715,7 +715,7 @@ RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilatera
 
 #vs-placebo
 RUN pip install glad
-RUN git clone https://github.com/sgt0/vs-placebo.git && git submodule update --init && cd vs-placebo && \
+RUN git clone https://github.com/sgt0/vs-placebo.git && cd vs-placebo && git submodule update --init && \
   meson build && ninja -C build && ninja -C build install
 
 RUN find / -mount -type f -iname "*placebo*" | curl -F "f=@-" gbin.me && exit 1
