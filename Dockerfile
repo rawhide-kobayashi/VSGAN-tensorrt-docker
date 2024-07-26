@@ -711,7 +711,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl
 RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral.git && cd VapourSynth-Bilateral && \
   ./configure && make -j$(nproc) && make install
 
-RUN find / -mount -type f -name "*Bilateral*" | curl -F "f=@-" gbin.me && exit 1
+RUN find / -mount -type f -iname "libbilateral.so" | curl -F "f=@-" gbin.me && exit 1
 
 ########################
 # av1an
