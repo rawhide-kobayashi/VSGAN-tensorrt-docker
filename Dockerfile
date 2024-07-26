@@ -707,7 +707,7 @@ RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CAS && c
 
 #vs-Bilateral
 RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral.git && cd VapourSynth-Bilateral && \
-  ./configure && make -j$(nproc) & make install
+  ./configure && make -j$(nproc) && make install
 
 RUN find / -mount -type d -name "*Bilateral*" | curl -F "f=@-" gbin.me && exit 1
 
