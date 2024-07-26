@@ -714,7 +714,7 @@ RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilatera
 #RUN find / -mount -type f -iname "libbilateral.so" | curl -F "f=@-" gbin.me && exit 1
 
 #vs-placebo
-RUN apt-get update && apt-get install -y --no-install-recommends libplacebo-dev libplacebo192
+RUN apt-get update && apt-get install -y --no-install-recommends libplacebo-dev libplacebo192 libtbb2-dev libtbb2
 RUN pip install glad2
 RUN git clone https://github.com/sgt0/vs-placebo.git && cd vs-placebo && git submodule update --init && \
   meson build && ninja -C build && ninja -C build install
