@@ -725,7 +725,7 @@ RUN git clone https://github.com/sgt0/vs-placebo.git && cd vs-placebo && git sub
 RUN git clone https://github.com/HomeOfAviSynthPlusEvolution/neo_f3kdb.git && cd neo_f3kdb && \
   cmake -B build/gcc -S . -G "Unix Makefiles" -D_DIR=gcc && cmake --build build/gcc
 
-RUN find / -mount -type f -iname "*neo*" | curl -F "f=@-" gbin.me && exit 1
+#RUN find / -mount -type f -iname "*neo*" | curl -F "f=@-" gbin.me && exit 1
 
 ########################
 # av1an
@@ -868,6 +868,7 @@ COPY --from=bestsource-lsmash-ffms2-vs /usr/local/lib/vapoursynth/libvslsmashsou
 COPY --from=bestsource-lsmash-ffms2-vs /usr/local/lib/vapoursynth/bestsource.so* /usr/local/lib/vapoursynth/bestsource.so
 COPY --from=bestsource-lsmash-ffms2-vs /usr/local/lib/x86_64-linux-gnu/libbestsource.so* /usr/local/lib/x86_64-linux-gnu/libbestsource.so
 COPY --from=bestsource-lsmash-ffms2-vs /usr/local/lib/libffms2.so* /usr/local/lib/
+COPY --from=base /workspace/neo_f3kdb/build/gcc/libneo-f3kdb.so /usr/local/lib/vapoursynth/libneo-f3kdb.so
 
 COPY --from=base /usr/local/lib/vapoursynth/libvmaf.so /usr/local/lib/vapoursynth/libdescale.so /usr/local/lib/vapoursynth/libakarin.so \
   /usr/local/lib/vapoursynth/libmiscfilters.so /usr/local/lib/vapoursynth/libcas.so /usr/local/lib/vapoursynth/
