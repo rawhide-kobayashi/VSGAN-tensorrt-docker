@@ -809,7 +809,7 @@ RUN wget http://mirrors.kernel.org/ubuntu/pool/main/libt/libtirpc/libtirpc-dev_1
     http://security.ubuntu.com/ubuntu/pool/main/g/glibc/libc6-dev_2.39-0ubuntu8.2_amd64.deb \
     http://security.ubuntu.com/ubuntu/pool/main/g/glibc/libc-bin_2.39-0ubuntu8.2_amd64.deb \
     http://security.ubuntu.com/ubuntu/pool/main/g/glibc/libc-dev-bin_2.39-0ubuntu8.2_amd64.deb \
-    http://security.ubuntu.com/ubuntu/pool/main/l/linux/linux-libc-dev_6.8.0-38.38_amd64.deb \
+    http://security.ubuntu.com/ubuntu/pool/main/l/linux/linux-libc-dev_6.8.0-40.40_amd64.deb \
     http://mirrors.kernel.org/ubuntu/pool/main/r/rpcsvc-proto/rpcsvc-proto_1.4.2-0ubuntu7_amd64.deb \
     http://mirrors.kernel.org/ubuntu/pool/main/libt/libtirpc/libtirpc3t64_1.3.4+ds-1.1build1_amd64.deb
 
