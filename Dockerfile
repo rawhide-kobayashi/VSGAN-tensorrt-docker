@@ -714,7 +714,7 @@ RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilatera
 #RUN find / -mount -type f -iname "libbilateral.so" | curl -F "f=@-" gbin.me && exit 1
 
 #vs-placebo
-RUN pip install glad
+RUN pip install glad2
 RUN git clone https://github.com/sgt0/vs-placebo.git && cd vs-placebo && git submodule update --init && \
   meson build && ninja -C build && ninja -C build install
 
@@ -782,7 +782,7 @@ RUN pip uninstall -y cupy* $(pip freeze | grep '^opencv' | cut -d = -f 1) && \
 RUN pip install pandas
 
 #additional vapoursynth plugins
-RUN pip install vsdenoise havsfunc lvsfunc vsdeband glad
+RUN pip install vsdenoise havsfunc lvsfunc vsdeband glad2
 RUN pip install git+https://github.com/HomeOfVapourSynthEvolution/mvsfunc
 
 RUN git clone https://github.com/WolframRhodium/muvsfunc.git
