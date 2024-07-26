@@ -719,7 +719,13 @@ RUN pip install glad2
 RUN git clone https://github.com/sgt0/vs-placebo.git && cd vs-placebo && git submodule update --init && \
   meson build && ninja -C build && ninja -C build install
 
-RUN find / -mount -type f -iname "*placebo*" | curl -F "f=@-" gbin.me && exit 1
+#RUN find / -mount -type f -iname "*placebo*" | curl -F "f=@-" gbin.me && exit 1
+
+#neo_f3kdb
+RUN git clone https://github.com/HomeOfAviSynthPlusEvolution/neo_f3kdb.git && cd neo_f3kdb && \
+  cmake -B build/gcc -S . -G "MSYS Makefiles" -D_DIR=gcc && cmake --build build/gcc --target install
+
+RUN find / -mount -type f -iname "*neo*" | curl -F "f=@-" gbin.me && exit 1
 
 ########################
 # av1an
