@@ -713,6 +713,12 @@ RUN git clone https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilatera
 
 #RUN find / -mount -type f -iname "libbilateral.so" | curl -F "f=@-" gbin.me && exit 1
 
+#vs-placebo
+RUN git clone https://github.com/sgt0/vs-placebo.git && cd vs-placebo && \
+  meson build && ninja -C build && ninja -C build install
+
+RUN find / -mount -type f -iname "*placebo*" | curl -F "f=@-" gbin.me && exit 1
+
 ########################
 # av1an
 RUN apt install curl libssl-dev mkvtoolnix mkvtoolnix-gui clang-12 nasm libavutil-dev libavformat-dev libavfilter-dev -y && apt-get autoremove -y && apt-get clean
